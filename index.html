@@ -16,7 +16,7 @@
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
+               <div class="cart-item" id="firstCardItem">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
@@ -25,12 +25,12 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default"><i id="minusFirstItem" class="fas fa-minus"></i></button>
+                           <input type="text" id="firstItemNumber" class="form-control text-center" value="1">
+                           <button class="btn btn-default" id="addFirstItem"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <h5>$ <span id="firstItemPrice">1219</span></h5>
+                        <img src="images/remove.png" alt="" id="firstRemoveItem" class="remove-item">
                      </div>
                   </div>
                </div>
@@ -77,6 +77,60 @@
          </div>
       </div>
    </section>
+   <script>
+      // remove First Item
+      const firstItem = document.getElementById("firstRemoveItem");
+      firstItem.addEventListener("click",function(){
+         document.getElementById("firstCardItem").style.display = "none";
+         removeItem("firstItemPrice");
+      })
+
+      // add First Item Number
+      const addFirstItem = document.getElementById("addFirstItem");
+      addFirstItem.addEventListener("click", function(){
+         addItemNumber("firstItemNumber", "firstItemPrice", 1219);
+      })
+
+      // minus first item number 
+      const minusFirstItem = document.getElementById("minusFirstItem");
+      minusFirstItem.addEventListener("click", function(){
+         minusItemNumber("firstItemNumber", "firstItemPrice", 1219);
+      })
+
+      // function for add item number
+      function addItemNumber(itemNumberId, itemPriceId, price){
+         const itemValue = document.getElementById(itemNumberId).value;
+         const itemNumber = parseFloat(itemValue);
+         const itemText = document.getElementById(itemNumberId).value = itemNumber + 1;
+         const itemPrice = document.getElementById(itemPriceId).innerText;
+         const itemPriceNumber = parseFloat(itemPrice);
+         const itemUpdatePrice = document.getElementById(itemPriceId).innerText = itemPriceNumber + price;
+
+         const subTotal = document.getElementById("subTotal").innerText;
+         const subTotalNumber = parseFloat(subTotal);
+         const subtotalUpdate = document.getElementById("subTotal").innerText = subTotalNumber + price;
+         const totalUpdate = document.getElementById("total").innerText = subTotalNumber + price;
+      }
+
+       //Function for minus Item Number
+            function minusItemNumber(itemNumberId, itemPriceId, price){
+         const itemValue = document.getElementById(itemNumberId).value;
+         const itemNumber = parseFloat(itemValue);
+         if(itemNumber < 1){
+            return 1;
+         }
+         const itemText = document.getElementById(itemNumberId).value = itemNumber - 1;
+         const itemPrice = document.getElementById(itemPriceId).innerText;
+         const itemPriceNumber = parseFloat(itemPrice);
+         const itemUpdatePrice = document.getElementById(itemPriceId).innerText = itemPriceNumber - price;
+
+         const subTotal = document.getElementById("subTotal").innerText;
+         const subTotalNumber = parseFloat(subTotal);
+         const subtotalUpdate = document.getElementById("subTotal").innerText = subTotalNumber - price;
+         const totalUpdate = document.getElementById("total").innerText = subTotalNumber - price;
+      }
+
+   </script>
 </body>
 
 </html>
